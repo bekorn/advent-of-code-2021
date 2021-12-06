@@ -1,5 +1,5 @@
-mod day1;
-use day1::solution;
+mod day2;
+use day2::solution;
 
 fn main()
 {
