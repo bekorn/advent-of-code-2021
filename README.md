@@ -41,3 +41,86 @@ Compiler message:
 const toggle : bool = false;
 ```
 I'm quite curious if this is because of a limitation or just a thing forgotten in the backlog. 
+
+Edit1: I think this was a wise decision that I can't grasp currently.
+
+### Day 4
+
+There is a borrow checker rule that I don't understand. Here is a minimal scenario:
+
+Given these 2 functions
+````rust
+fn increase_by_one(elements: &mut [i32]) {
+    for element in elements {
+        *element += 1;
+    }
+}
+
+fn first_larger_than(elements: &[i32]) -> Option<&i32> {
+    for element in elements {
+        if *element > 6 {
+            return Some(element);
+        }
+    }
+    return None;
+}
+````
+and these variables
+`````rust
+let mut arr = [1, 2, 3, 4];
+let l: Option<&i32>;
+`````
+
+This works
+````rust
+loop {
+    increase_by_one(&mut arr);
+    if let Some(val) = first_larger_than(&arr) {
+        l = Some(val);
+        break;
+    }
+}
+
+println!("{:?}", l);
+````
+
+But this does not
+`````rust
+for _ in 0..10 {
+    increase_by_one(&mut arr);
+    if let Some(val) = first_larger_than(&arr) {
+        l = Some(val);
+        break;
+    }
+}
+
+println!("{:?}", l);
+`````
+giving the error message
+`````text
+error[E0502]: cannot borrow `arr` as mutable because it is also borrowed as immutable
+  --> src\main.rs:36:25
+   |
+36 |         increase_by_one(&mut arr);
+   |                         ^^^^^^^^ mutable borrow occurs here
+37 |         if let Some(val) = first_larger_than(&arr) {
+   |                                              ---- immutable borrow occurs here
+...
+70 |     println!("{:?}", l);
+   |                      - immutable borrow later used here
+`````
+
+It is definitely not about the `for x in y` syntax because this version also doesn't compile, giving the same error
+`````rust
+let mut i = 0;
+loop {
+    if i < 10 { break; }
+    i += 1;
+
+    increase_by_one(&mut arr);
+    if let Some(val) = first_larger_than(&arr) {
+        l = Some(val);
+        break;
+    }
+}
+`````
