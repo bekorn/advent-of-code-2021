@@ -124,3 +124,17 @@ loop {
     }
 }
 `````
+
+### Day 5
+`type` keyword just creates an alias for the given type, it does not have access to the type's methods.
+`````rust
+type u32x2_type = (u32, u32);
+struct u32x2_struct(u32, u32);
+
+fn main()
+{
+    let p = u32x2_type(1, 2); // error[E0423]: expected function, found type alias `u32x2_type`
+    let p = u32x2_struct(1, 2);
+}
+`````
+the `u32x2_struct` has no methods though, a derive attribute is also needed to make it work like a tuple.
