@@ -1,6 +1,6 @@
 // copy pasted from https://github.com/llogiq/partition/blob/master/src/lib.rs
 // std partition is copy, and partition_in_place is unsafe
-pub fn partition_index<T, P>(data: &mut [T], predicate: P) -> usize
+fn partition_index<T, P>(data: &mut [T], predicate: P) -> usize
     where P: Fn(&T) -> bool {
     let len = data.len();
     if len == 0 { return 0; }
@@ -13,7 +13,7 @@ pub fn partition_index<T, P>(data: &mut [T], predicate: P) -> usize
     }
 }
 
-pub fn solution()
+fn main()
 {
     #[allow(dead_code)]
     enum Part { One, Two }

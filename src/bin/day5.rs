@@ -63,7 +63,7 @@ fn line_iterator_test() {
     }
 }
 
-pub fn solution() {
+fn main() {
     #[allow(dead_code)]
     enum Part { One, Two }
     let part = Part::Two;

@@ -1,4 +1,4 @@
-pub fn solution()
+fn main()
 {
     #[allow(dead_code)]
     enum Part { One, Two }

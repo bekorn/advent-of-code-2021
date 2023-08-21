@@ -3,8 +3,7 @@
 I have read the first couple of chapters of the rust book and watched some videos but, this is my first hands on experience with the language.
 Besides the solutions, I will also try to document interesting things I found about the language.
 
-#### Compilation (TODO)
-I don't know how to compile it 😅, _yet_. Curently CLion Rust plugin does it for me.
+Use `cargo run --bin dayN` to build and run the solution for day N.
 
 ### Day1
 Even the match statement has branches, its compile time state of borrow-or-not is singular.
